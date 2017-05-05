@@ -314,10 +314,11 @@ def newCategory():
 # apologies in advance for the wonky returns formatting. PEP8 styling :/
 @app.route('/catalog/<int:category_id>/edit/', methods=['GET', 'POST'])
 def editCategory(category_id):
-    editedCategory = session.query(
-        Category).filter_by(id=category_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+
+    editedCategory = session.query(Category).filter_by(id=category_id).one()
+
     if editedCategory.user_id != login_session['user_id']:
         return "<script>function myFunction() {alert('You are not " \
                "authorized to edit this category. " \
@@ -335,10 +336,11 @@ def editCategory(category_id):
 # Delete a category
 @app.route('/catalog/<int:category_id>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_id):
-    categoryToDelete = session.query(
-        Category).filter_by(id=category_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+
+    categoryToDelete = session.query(Category).filter_by(id=category_id).one()
+
     if categoryToDelete.user_id != login_session['user_id']:
         return "<script>function myFunction() {alert('You are not " \
                "authorized to delete this category. " \
